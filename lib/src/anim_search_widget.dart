@@ -41,6 +41,7 @@ class AnimSearchBar extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
   final Function(String) onSubmitted;
+  final void Function(String)? onChanged;
   final TextInputAction textInputAction;
   final Function(int) searchBarOpen;
   const AnimSearchBar({
@@ -49,15 +50,16 @@ class AnimSearchBar extends StatefulWidget {
     /// The width cannot be null
     required this.width,
     required this.searchBarOpen,
+
     /// The textController cannot be null
     required this.textController,
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
-    
+
     /// Height of wrapper container
     this.height = 100,
-    
+
     /// choose your custom color
     this.color = Colors.white,
 
@@ -77,7 +79,8 @@ class AnimSearchBar extends StatefulWidget {
 
     /// The onSubmitted cannot be null
     required this.onSubmitted,
-    
+    required this.onChanged,
+
     /// make the search bar to open from right to left
     this.rtl = false,
 
@@ -261,9 +264,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     textInputAction: widget.textInputAction,
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
-                    onChanged: (value) {
-                      textFieldValue = value;
-                    },
+                    onChanged: widget.onChanged,
                     onSubmitted: (value) => {
                       widget.onSubmitted(value),
                       unfocusKeyboard(),
@@ -360,7 +361,6 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                         _con.reverse();
                       }
                     },
-
                   );
                   widget.searchBarOpen(toggle);
                 },
