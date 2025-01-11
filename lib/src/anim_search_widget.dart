@@ -38,6 +38,7 @@ class AnimSearchBar extends StatefulWidget {
   final Color? textFieldColor;
   final Color? searchIconColor;
   final Color? textFieldIconColor;
+  final int? toggleVal;
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
   final Function(String) onSubmitted;
@@ -68,6 +69,7 @@ class AnimSearchBar extends StatefulWidget {
 
     /// choose your custom color for the search when it is expanded
     this.searchIconColor = Colors.black,
+    this.toggleVal,
 
     /// choose your custom color for the search when it is expanded
     this.textFieldIconColor = Colors.black,
@@ -250,7 +252,11 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
               ///Using Animated opacity to change the opacity of th textField while expanding
               child: AnimatedOpacity(
-                opacity: (toggle == 0) ? 0.0 : 1.0,
+                opacity: (widget.toggleVal != null
+                        ? (widget.toggleVal == 0)
+                        : (toggle == 0))
+                    ? 0.0
+                    : 1.0,
                 duration: Duration(milliseconds: 200),
                 child: Container(
                   padding: const EdgeInsets.only(left: 10),
